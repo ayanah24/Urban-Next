@@ -1,5 +1,5 @@
 const cloudinary = require('cloudinary').v2;
-// const { CloudinaryStorage } = require('multer-storage-cloudinary');
+const { CloudinaryStorage } = require('multer-storage-cloudinary');
 
 
 cloudinary.config({
@@ -8,16 +8,16 @@ cloudinary.config({
     api_secret: process.env.CLOUDINARY_API_SECRET
 });
 
-// const storage = new CloudinaryStorage({
-//     cloudinary: cloudinary,
-//     params: {
-//         folder: 'wanderlust_DEV',
-//         allowed_formats: ['jpeg', 'png', 'jpg','webp'],
+const storage = new CloudinaryStorage({
+    cloudinary: cloudinary,
+    params: {
+        folder: 'wanderlust_DEV',
+        allowed_formats: ['jpeg', 'png', 'jpg','webp'],
  
-//     }
-// });   
+    }
+});   
 
 module.exports = {
     cloudinary,
-    // storage
+    storage
 };
