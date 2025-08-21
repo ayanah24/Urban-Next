@@ -1,0 +1,67 @@
+
+<%- layout("layouts/boilerplate") %>
+
+<div class="row">
+    <div class="col-8 offset-2">
+        <br><br/>
+        <h3>Manage Listing</h3>
+        <form method="POST" action="/listings/<%= listing._id %>?_method=PUT" enctype="multipart/form-data" novalidate class="needs-validation">
+            <div class="mb-3">
+                <label for="title" class="form-label">Title</label>
+                <input name="listing[title]" value="<%= listing.title %>" type="text" class="form-control" placeholder="enter title" required>
+                <div class="invalid-feedback">Title should be valid</div>
+            </div>
+            <div class="mb-3">
+                <label for="description" class="form-label">Description</label>
+                <input name="listing[description]" value="<%= listing.description %>" type="text" class="form-control" placeholder="enter description" required>
+                <div class="invalid-feedback">Please enter a short description</div>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Manage Images</label>
+                <% if (previewImageUrls && previewImageUrls.length > 0) { %>
+                    <div class="existing-images mb-3">
+                        <h5>Existing Images (select to delete):</h5>
+                        <div class="row">
+                            <% previewImageUrls.forEach((url, index) => { %>
+                                <div class="col-md-3 mb-2">
+                                    <img src="<%= url %>" alt="Image <%= index + 1 %>" class="img-thumbnail" style="max-width: 250px;">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" name="deleteImages[]" value="<%= listing.image[index].filename %>" id="delete-<%= index %>">
+                                        <label class="form-check-label" for="delete-<%= index %>">Delete this image</label>
+                                    </div>
+                                </div>
+                            <% }) %>
+                        </div>
+                    </div>
+                <% } else { %>
+                    <p>No images currently uploaded.</p>
+                <% } %>
+                <label for="images" class="form-label">Upload New Images (optional, multiple allowed)</label>
+                <input name="listing[images]" type="file" class="form-control" multiple>
+            </div>
+
+            <div class="row">
+                <div class="mb-3 col-md-4">
+                    <label for="price" class="form-label">Price</label>
+                    <input name="listing[price]" value="<%= listing.price %>" class="form-control" placeholder="enter price" required>
+                    <div class="invalid-feedback">Pricing should be valid</div>
+                </div>
+                <div class="mb-3 col-md-8">
+                    <label for="country" class="form-label">Country</label>
+                    <input name="listing[country]" value="<%= listing.country %>" type="text" class="form-control" placeholder="enter country" required>
+                    <div class="invalid-feedback">Country name should be valid</div>
+                </div> 
+            </div>
+            <div class="mb-3">
+                <label for="location" class="form-label">Location</label>
+                <input name="listing[location]" value="<%= listing.location %>" type="text" class="form-control" placeholder="enter location" required>
+                <div class="invalid-feedback">Location must be valid</div>
+            </div>
+            <br>
+
+            <button class="btn btn-dark Edit-btn">Edit</button>
+            <br><br/>
+        </form>
+    </div>
+</div>

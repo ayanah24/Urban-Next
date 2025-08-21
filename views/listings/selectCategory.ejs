@@ -1,0 +1,124 @@
+<%- layout("layouts/boilerplate") %>
+
+<form id="categoryForm" action="/listings/new" method="GET">
+    <input type="hidden" name="category" id="selectedCategory">
+    <div class="filters-container">
+        <div class="filters" data-category="Trending"><i class="fa-solid fa-fire"></i><p>Trending</p></div>
+        <div class="filters" data-category="Rooms"><i class="fa-solid fa-bed"></i><p>Rooms</p></div>
+        <div class="filters" data-category="Iconic cities"><i class="fa-solid fa-mountain-city"></i><p>Iconic cities</p></div>
+        <div class="filters" data-category="Mountains"><i class="fa-solid fa-mountain-sun"></i><p>Mountains</p></div>
+        <div class="filters" data-category="Castles"><i class="fa-solid fa-chess-rook"></i><p>Castles</p></div>
+        <div class="filters" data-category="Amazing pools"><i class="fa-solid fa-person-swimming"></i><p>Amazing pools</p></div>
+        <div class="filters" data-category="Camping"><i class="fa-solid fa-campground"></i><p>Camping</p></div>
+        <div class="filters" data-category="Farms"><i class="fa-solid fa-tractor"></i><p>Farms</p></div>
+        <div class="filters" data-category="Shops"><i class="fa-solid fa-shop"></i><p>Shops</p></div>
+        <div class="filters" data-category="Restro"><i class="fa-solid fa-utensils"></i><p>Restro</p></div>
+        <div class="filters" data-category="Home"><i class="fa-solid fa-house"></i><p>Home</p></div>
+        <div class="filters" data-category="Hotels"><i class="fa-solid fa-hotel"></i><p>Hotels</p></div>
+    </div>
+    <button type="submit" class="next-btn" disabled>Next</button>
+</form>
+
+<script>
+const filters = document.querySelectorAll(".filters");
+const nextBtn = document.querySelector(".next-btn");
+const selectedCategoryInput = document.getElementById("selectedCategory");
+
+filters.forEach(item => {
+    item.addEventListener("click", () => {
+        filters.forEach(f => f.classList.remove("selected"));
+        item.classList.add("selected");
+        selectedCategoryInput.value = item.dataset.category;
+        nextBtn.disabled = false;
+    });
+});
+</script>
+<style>
+body {
+    background: #f7f7f7;
+    font-family: 'Segoe UI', Arial, sans-serif;
+}
+
+.filters-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+    justify-content: center;
+    margin: 40px 0 32px 0;
+}
+
+.filters {
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 2px 12px rgba(60,60,60,0.08);
+    padding: 28px 32px 20px 32px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+    transition: box-shadow 0.2s, border 0.2s;
+    border: 2px solid transparent;
+    min-width: 120px;
+    min-height: 120px;
+    user-select: none;
+}
+
+.filters.selected {
+    border: 2px solid #ff385c;
+    box-shadow: 0 4px 20px rgba(255,56,92,0.12);
+    background: #fff0f4;
+}
+
+.filters i {
+    font-size: 2.2rem;
+    color: #ff385c;
+    margin-bottom: 12px;
+}
+
+.filters p {
+    margin: 0;
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: #222;
+    letter-spacing: 0.02em;
+}
+
+.next-btn {
+    display: block;
+    margin: 32px auto 0 auto;
+    padding: 12px 36px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #fff;
+    background: linear-gradient(90deg, #ff385c 0%, #ff7e5f 100%);
+    border: none;
+    border-radius: 24px;
+    box-shadow: 0 2px 8px rgba(255,56,92,0.10);
+    cursor: pointer;
+    transition: background 0.2s, box-shadow 0.2s, opacity 0.2s;
+    opacity: 1;
+}
+
+.next-btn:disabled {
+    background: #ddd;
+    color: #aaa;
+    cursor: not-allowed;
+    opacity: 0.7;
+    box-shadow: none;
+}
+
+@media (max-width: 700px) {
+    .filters-container {
+        gap: 12px;
+    }
+    .filters {
+        padding: 18px 12px 12px 12px;
+        min-width: 90px;
+        min-height: 90px;
+    }
+    .next-btn {
+        width: 90%;
+        font-size: 1rem;
+    }
+}
+</style>

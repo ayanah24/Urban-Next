@@ -1,0 +1,461 @@
+body{
+background-color: white;
+   font-family: "Plus Jakarta Sans", sans-serif !important;
+   display: flex;
+   flex-direction: column;
+   min-height: 100vh;
+}
+
+.container{
+    flex:1;
+}
+
+
+/* navbar */
+.navbar{
+    height:5em;
+    background-color: white;
+}
+.fa-compass{
+    color:#fe424d;
+    font-size: 2rem;
+}
+.nav-link{
+    color: #222222 !important;
+}
+/* footer */
+.f-info-links a{
+    text-decoration: none;
+    color:#222222;
+}
+.f-info-links a:hover{
+    text-decoration: underline;
+}
+
+.f-info-links,
+.f-info-socials,
+.f-info-brand{
+    width:100%;
+display: flex;
+align-items: center;
+justify-content: center;
+}
+
+.f-info-socials i{
+    font-size: 1.2rem;
+    margin-right: 1rem;
+
+}
+
+.f-info{
+text-align: center;
+ height: 8rem;
+ background-color: #cbebeb;
+ display:flex;
+ flex-wrap: wrap;
+ justify-content: center;
+ align-items: space-evenly;
+}
+
+.listing-card {
+    border: none !important;
+    margin-bottom: 2rem;
+}
+
+.card-img-top {
+    border-radius: 1.5rem !important;
+    width: 100% !important;
+    height: 15rem; /* Adjusted for 4-column layout */
+    object-fit: cover;
+}
+
+.card-body {
+    padding: 0 !important;
+}
+
+.card-text p {
+    font-weight: 400 !important;
+}
+
+
+/* card Effect */
+.card-img-overlay{
+    opacity: 0;
+}
+
+.card-img-overlay:hover{
+    opacity:0.2;
+    background-color: white;
+}
+/* New page */
+.add-btn{
+    background-color: #fe424d !important;
+    border:none !important;
+}
+
+/* Edit page */
+.Edit-btn{
+    background-color: #fe424d !important;
+    border:none !important;
+}
+
+/* show.ejs btns */
+.show-img{
+    height: 30vh;
+
+width: 100%;
+object-fit: cover;
+}
+
+.btns{
+    display:flex;
+}
+
+.show-card{
+   padding-left:0;
+   padding-right:0;
+}
+
+/* show.ejs map */
+#map {
+    height: 400px;
+    width: 100%;
+    border-radius: 10px;
+    margin-top: 10px;
+}
+
+/* Search Button Styles */
+.search-btn{
+    background-color: #fe424d; 
+    color:#fff; 
+    border-radius: 25px; 
+    padding:0 1rem 0 1rem; 
+}
+/* Search Button Hover Effect */
+.search-btn:hover{
+    background-color: #ff5a5f; 
+    color:#fff; 
+}
+/* Icon Inside Search Button */
+.search-btn i {
+  display:inline; 
+  margin-right: 0.5rem; 
+}
+/* Search Input Field Styles */
+.search-inp{
+  border-radius: 25px; 
+  padding:0.5rem 3rem 0.5rem 3rem; 
+  font-size: 1rem; 
+}
+
+/* Filter item styles */
+#filters {
+    display: flex;
+  
+   padding: 1rem 1.5rem 0.5rem 1.5rem;
+    border-bottom: 1px solid #ddd;
+    gap: 2rem;
+    align-items: center;
+   
+  }
+
+/* Filter item styles */
+.filters {
+    text-align: center;
+    flex: 0 0 auto;
+    opacity: 0.65;
+    transition: all 0.3s ease;
+    color: #222;
+} 
+
+/* Filter item hover effect */
+ .filters:hover {
+    opacity: 1;
+    cursor: pointer;
+    transform: scale(1.05);
+} 
+
+/* Filter icon styles */
+.filters i {
+    font-size: 1.3rem;
+    margin-bottom: 0.3rem;
+} 
+
+/* Filter text styles */
+.filters p {
+    font-size: 0.75rem;
+    margin: 0;
+    font-weight: 500;
+} 
+
+/* Tax info hidden by default */
+.tax-info {
+    display: none;
+} 
+
+/* Tax toggle button styles */
+ .tax-toggle {
+    border: 1px solid black;
+    border-radius: 1rem;
+    height: 3.25rem;
+    padding: 1rem;
+    margin-left: 2rem;
+    display: flex;
+    align-items: center;
+} 
+
+/* Responsive filters for wider screens */
+@media (min-width: 768px) {
+    #filters {
+        flex-wrap: wrap;
+        overflow-x: visible;
+    }
+} 
+
+/* Sign-up styling */
+.signup-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 90vh;
+  background: linear-gradient(to right, #f8f9fa, #e9ecef);
+}
+
+.signup-card {
+  background: #fff;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+  width: 100%;
+  max-width: 420px;
+}
+
+.signup-card h3 {
+  font-weight: 600;
+  color: #333;
+}
+
+.or-divider {
+  text-align: center;
+  margin: 1.5rem 0;
+  position: relative;
+  color: #777;
+  font-size: 14px;
+}
+
+.or-divider::before,
+.or-divider::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  width: 40%;
+  height: 1px;
+  background: #ddd;
+}
+
+.or-divider::before {
+  left: 0;
+}
+
+.or-divider::after {
+  right: 0;
+}
+
+/* Login styling */
+.card {
+    background-color: #fff;
+    border: none;
+    border-radius: 12px;
+    padding: 20px;
+}
+
+.btn-success {
+    font-weight: 500;
+    border-radius: 8px;
+}
+
+.btn-outline-danger {
+    font-weight: 500;
+    border-radius: 8px;
+}
+
+.form-control {
+    border-radius: 8px;
+    padding: 10px;
+}
+
+/* new.ejs page */
+/* Background - very light Airbnb style without overpowering red */
+.listing-form-container {
+    display: flex;
+    justify-content: center;
+    padding: 50px 15px;
+    background: #fafafa; /* light neutral background */
+}
+
+/* Form Card Styling */
+.listing-form-card {
+    background: #ffffff; /* clean white card */
+    padding: 30px 40px;
+    border-radius: 16px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+    max-width: 850px;
+    width: 100%;
+}
+
+/* Headings */
+.form-heading {
+    font-size: 1.9rem;
+    font-weight: 700;
+    color: #FF5A5F; /* Airbnb red */
+    margin-bottom: 5px;
+}
+
+.form-subheading {
+    font-size: 1rem;
+    color: #6c757d;
+    margin-bottom: 25px;
+}
+
+.section-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #FF5A5F;
+    margin-bottom: 15px;
+}
+
+/* Form Labels */
+.form-label {
+    font-weight: 500;
+    color: #333;
+}
+
+/* Inputs */
+.form-control {
+    border-radius: 8px;
+    padding: 10px 14px;
+    border: 1px solid #ced4da;
+    transition: all 0.2s ease-in-out;
+}
+
+.form-control:focus {
+    border-color: #FF5A5F;
+    box-shadow: 0 0 0 0.2rem rgba(255,90,95,0.25);
+}
+
+
+/* Input Groups */
+.input-group-text {
+    background-color: #fff5f5;
+    border: 1px solid #ffc2c2;
+    color: #FF5A5F;
+    font-weight: bold;
+}
+
+/* Buttons */
+.btn-primary {
+    background: linear-gradient(90deg, #FF5A5F, #ff3b40);
+    border: none;
+    border-radius: 50px;
+    font-size: 1.05rem;
+    font-weight: 600;
+    transition: 0.3s ease;
+    padding: 10px 25px;
+}
+
+.btn-primary:hover {
+    background: linear-gradient(90deg, #ff3b40, #e63338);
+    transform: scale(1.03);
+}
+
+/* Responsive */
+@media (max-width: 576px) {
+    .listing-form-card {
+        padding: 20px;
+    }
+    .form-heading {
+        font-size: 1.5rem;
+    }
+}/* Input Groups */
+.input-group-text {
+    background-color: #fff5f5;
+    border: 1px solid #ffc2c2;
+    color: #FF5A5F;
+    font-weight: bold;
+}
+
+/* Buttons */
+.btn-primary {
+    background: linear-gradient(90deg, #FF5A5F, #ff3b40);
+    border: none;
+    border-radius: 50px;
+    font-size: 1.05rem;
+    font-weight: 600;
+    transition: 0.3s ease;
+    padding: 10px 25px;
+}
+
+.btn-primary:hover {
+    background: linear-gradient(90deg, #ff3b40, #e63338);
+    transform: scale(1.03);
+}
+
+/* Responsive */
+@media (max-width: 576px) {
+    .listing-form-card {
+        padding: 20px;
+    }
+    .form-heading {
+        font-size: 1.5rem;
+    }
+}
+/* Image Modal Styles */ 
+
+.clickable-img {
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.clickable-img:hover {
+    transform: scale(1.05);
+}
+
+.modal-backdrop {
+    opacity: 0.8;  /* Darker overlay for focus on image */
+}
+
+/* search bar */
+ .search-form {
+    border: 1px solid #ddd;
+    border-radius: 40px;
+    padding: 5px 10px;
+    background: #fff;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  }
+
+  .search-input {
+    border: none;
+    outline: none;
+    box-shadow: none;
+    width: 220px;
+    font-size: 15px;
+    padding-left: 10px;
+  }
+
+  .search-input::placeholder {
+    color: #888;
+  }
+
+  .search-button {
+    background-color: #ff385c; /* Airbnb pink */
+    color: white;
+    border-radius: 50%;
+    padding: 8px 12px;
+    border: none;
+  }
+
+  .search-button:hover {
+    background-color: #e31c5f;
+  }
+
+

@@ -1,0 +1,203 @@
+<%- layout("layouts/boilerplate") %>
+
+<script>
+    const mapToken = "<%= process.env.MAP_TOKEN %>";
+    const coordinates = <%- JSON.stringify(listing.geometry.coordinates) %>
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const shareBtn = document.getElementById('share-btn');
+
+        if (shareBtn) {
+            shareBtn.addEventListener('click', async () => {
+                const shareData = {
+                    title: '<%= listing.title %>',
+                    text: '<%= listing.description %>',
+                    url: window.location.href
+                };
+                try {
+                    // Mobile native share
+                    if (navigator.share) {
+                        await navigator.share(shareData);
+                    } else {
+                        // Desktop fallback
+                        await navigator.clipboard.writeText(shareData.url);
+                        alert('Link copied to clipboard!');
+                    }
+                } catch (err) {
+                    console.error('Share failed:', err);
+                }
+            });
+        }
+    });
+</script>
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h4 class="text-italic mb-0">
+        <%= listing.title %>
+    </h4>
+    <button id="share-btn" class="btn btn-outline-primary share-btn">Share Listing</button>
+</div>
+
+<div class="row listing-header-img-row mb-4">
+    <div class="col-md-12">
+        <!-- Flexible image gallery with clickable images -->
+        <div class="listing-images row g-2">
+            <% if (listing.image && listing.image.length > 0) { %>
+                <!-- First image (normal size on left) -->
+                <div class="col-12 col-md-6">
+                    <img src="<%= listing.image[0].url %>" alt="Listing image 1" class="img-fluid rounded clickable-img" style="object-fit: cover; height: 250px; width: 100%;" data-bs-toggle="modal" data-bs-target="#imageModal" data-src="<%= listing.image[0].url %>">
+                </div>
+
+                <!-- Right side: stacked in pattern -->
+                <div class="col-12 col-md-6">
+                    <div class="row g-2">
+                        <!-- Left stack: 2nd (top), 3rd (bottom) -->
+                        <div class="col-6 d-flex flex-column gap-2">
+                            <% if (listing.image[1]) { %>
+                                <img src="<%= listing.image[1].url %>" alt="Listing image 2" class="img-fluid rounded clickable-img" style="object-fit: cover; height: 120px; width: 100%;" data-bs-toggle="modal" data-bs-target="#imageModal" data-src="<%= listing.image[1].url %>">
+                            <% } %>
+                            <% if (listing.image[2]) { %>
+                                <img src="<%= listing.image[2].url %>" alt="Listing image 3" class="img-fluid rounded clickable-img" style="object-fit: cover; height: 120px; width: 100%;" data-bs-toggle="modal" data-bs-target="#imageModal" data-src="<%= listing.image[2].url %>">
+                            <% } %>
+                        </div>
+
+                        <!-- Right stack: 4th (top), 5th (bottom) with optional overlay -->
+                        <div class="col-6 d-flex flex-column gap-2">
+                            <% if (listing.image[3]) { %>
+                                <img src="<%= listing.image[3].url %>" alt="Listing image 4" class="img-fluid rounded clickable-img" style="object-fit: cover; height: 120px; width: 100%;" data-bs-toggle="modal" data-bs-target="#imageModal" data-src="<%= listing.image[3].url %>">
+                            <% } %>
+                            <% if (listing.image[4]) { %>
+                                <div class="position-relative">
+                                    <img src="<%= listing.image[4].url %>" alt="Listing image 5" class="img-fluid rounded clickable-img" style="object-fit: cover; height: 120px; width: 100%;" data-bs-toggle="modal" data-bs-target="#imageModal" data-src="<%= listing.image[4].url %>">
+                                    <% if (listing.image.length > 5) { %>
+                                        <!-- Overlay "Show all photos" if more images -->
+                                        <button class="btn btn-dark position-absolute bottom-0 end-0 m-2" style="opacity: 0.8;" onclick="alert('Implement modal or page for all photos here');">Show all photos</button>
+                                    <% } %>
+                                </div>
+                            <% } %>
+                        </div>
+                    </div>
+                </div>
+            <% } else { %>
+                <div class="col-12">
+                    <p>No images available.</p>
+                </div>
+            <% } %>
+        </div>
+    </div>
+
+    <div class="card-body mt-3">
+        <p class="text-muted">Hosted by <i><%= listing.owner.username %></i></p>
+        <p class="card-text mb-2"><%= listing.description %></p>
+        <p class="card-text fw-bold">&#8377;<%= listing.price.toLocaleString("en-IN") %></p>
+        <p class="card-text"><i class="bi bi-geo-alt-fill"></i> <%= listing.location %>, <%= listing.country %></p>
+    </div>
+</div>
+
+<% if (listing.offers && listing.offers.length > 0) { %>
+    <div class="mb-4">
+        <h4 class="fw-semibold">What this place offers</h4>
+        <div class="row mt-2">
+            <% listing.offers.forEach(offer => { %>
+                <div class="col-md-4 mb-2 d-flex align-items-center">
+                    <i class="bi bi-check-circle-fill text-success me-2"></i>
+                    <span><%= offer %></span>
+                </div>
+            <% }) %>
+        </div>
+    </div>
+<% } %>
+
+<% if (currentUser && currentUser._id.equals(listing.owner._id)) { %>
+    <div class="d-flex mb-4">
+        <a href="/listings/<%= listing._id %>/edit" class="btn btn-dark me-3">Edit</a>
+        <form method="POST" action="/listings/<%= listing._id %>/?_method=DELETE">
+            <button class="btn btn-danger">Delete</button>
+        </form>
+    </div>
+<% } %>
+
+<% if (currentUser) { %>
+    <div class="mb-4">
+        <hr>
+        <h4>Leave a Review</h4>
+        <form action="/listings/<%= listing.id %>/reviews" method="post" class="needs-validation" novalidate>
+            <div class="mb-3">
+                <label class="form-label">Rating</label>
+                <fieldset class="starability-slot">
+                    <input type="radio" id="no-rate" class="input-no-rate" name="review[rating]" value="1" checked aria-label="No rating." />
+                    <input type="radio" id="first-rate1" name="review[rating]" value="1" />
+                    <label for="first-rate1" title="Terrible">1 star</label>
+                    <input type="radio" id="first-rate2" name="review[rating]" value="2" />
+                    <label for="first-rate2" title="Not good">2 stars</label>
+                    <input type="radio" id="first-rate3" name="review[rating]" value="3" />
+                    <label for="first-rate3" title="Average">3 stars</label>
+                    <input type="radio" id="first-rate4" name="review[rating]" value="4" />
+                    <label for="first-rate4" title="Very good">4 stars</label>
+                    <input type="radio" id="first-rate5" name="review[rating]" value="5" />
+                    <label for="first-rate5" title="Amazing">5 stars</label>
+                </fieldset>
+            </div>
+            <div class="mb-3">
+                <label for="comment" class="form-label">Comments</label>
+                <textarea name="review[comment]" id="comment" cols="30" rows="5" class="form-control" required></textarea>
+                <div class="invalid-feedback">Please add some comments for review.</div>
+            </div>
+            <button class="btn btn-outline-dark">Submit</button>
+        </form>
+    </div>
+<% } %>
+
+<% if (listing.reviews.length > 0) { %>
+    <div class="mb-4">
+        <h4 class="fw-semibold">All Reviews</h4>
+        <div class="row">
+            <% listing.reviews.forEach(review => { %>
+                <div class="card col-md-5 me-3 mb-3 shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">@<%= review.author.username %></h5>
+                        <p class="card-text"><%= review.comment %></p>
+                        <p class="starability-result card-text" data-rating="<%= review.rating %>"></p>
+                    </div>
+                    <% if (currentUser && currentUser._id.equals(review.author._id)) { %>
+                        <form method="POST" action="/listings/<%= listing._id %>/reviews/<%= review._id %>?_method=DELETE" class="p-2">
+                            <button class="btn btn-sm btn-danger">Delete</button>
+                        </form>
+                    <% } %>
+                </div>
+            <% }) %>
+        </div>
+    </div>
+<% } %>
+
+<div class="mb-5">
+    <h4>Where you'll be</h4>
+    <div id="map" style="height: 400px;" class="shadow-sm rounded"></div>
+</div>
+
+<!-- Bootstrap Image Modal (add at the bottom of the file) -->
+<div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="imageModalLabel">Image Preview</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center">
+                <img id="modalImage" src="" alt="Enlarged image" class="img-fluid" style="max-height: 70vh;">
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- JavaScript for setting the modal image (add at the bottom, before </body> or in a script tag) -->
+<script>
+    document.querySelectorAll('.clickable-img').forEach(img => {
+        img.addEventListener('click', function() {
+            document.getElementById('modalImage').src = this.dataset.src;
+        });
+    });
+</script>
+
+<!-- Your existing map script -->
+<script src="/js/map.js"></script>
