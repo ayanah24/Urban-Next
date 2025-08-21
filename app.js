@@ -20,7 +20,7 @@ const User = require('./models/user.js');
 const LocalPassport = require('passport-local');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 
-const oauthRoutes = require('./routes/oAuth.js');
+const oauthRoutes = require('./routes/OAuth.js');
 
 
 app.use(methodOverride('_method'));
