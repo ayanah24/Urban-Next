@@ -143,10 +143,23 @@ app.use((req, res, next) => {
 });
 
 
+// app.use((err, req, res, next) => {
+//   let statusCode = typeof err.statusCode === 'number' ? err.statusCode : 500;
+//   let message = err.message || "Something went wrong!";
+  
+//   res.status(statusCode).render("users/error.ejs", { message });
+// });
 app.use((err, req, res, next) => {
   let statusCode = typeof err.statusCode === 'number' ? err.statusCode : 500;
   let message = err.message || "Something went wrong!";
-  
+
+  // log full error for debugging
+  console.error("Error occurred:", {
+    statusCode,
+    message,
+    stack: err.stack
+  });
+
   res.status(statusCode).render("users/error.ejs", { message });
 });
 
