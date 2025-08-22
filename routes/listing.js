@@ -11,7 +11,7 @@ const upload = multer({storage});
 router
 .route("/")
 .get(wrapAsync(ListingController.index))
-.post(isLoggedIn, validateListing, upload.array('listing[images]', 5), wrapAsync(ListingController.createListing));  
+.post(isLoggedIn, upload.array('listing[images]', 5),validateListing, wrapAsync(ListingController.createListing));  
 
 // Step 1: Category selection before creating listing
 router.get("/select-category", isLoggedIn, ListingController.renderSelectCategory);
